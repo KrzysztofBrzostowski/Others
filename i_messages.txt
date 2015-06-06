@@ -1,0 +1,70 @@
+send/receive/billpay
+
+=======Scanned document not found=======Znalezione w klasach.metoda / plikach.resx========
+
+----------------------------------------
+CustomerBLL : PowerTransactBLL
+private bool ValidateScanning(Customer objCustomer, string contactIDHidden, string wSExchange, ref string newScannedDoc)
+----------------------------------------
+
+=====================================================
+==================Ciekawe miejsca 1======================
+
+---------------------------------------------------------------
+  FoQuickReceive.aspx.vb(btNextCV 2240): 
+  updateCustStatus = objCustomerBLL.UpdateCustomer(objCustmer, newScannedDoc)
+---------------------------------------------------------------
+
+---------------------------------------------------------------
+  FoQuickReceive.aspx.vb(btNewCustomerCV 3188): 
+  createCustStatus = objCustomerBLL.CreateCustomer(objCustomer, newScannedDoc, newContactID)
+--------------------
+                        txFiscalCodeCV.Text = hdFiscalCode.Value
+                        cbVerified.Checked = False
+                        cbVerified.Enabled = True
+-----------------------------------------------------------------
+
+--------------------------CustomerBLL--------------------------
+public UpdateCustStatus UpdateCustomer(Customer objCustomer, out string newScannedDoc{
+            //calculate and validtae fiscal code
+            bool calcFiscalres = CalculateAndValidateFiscalCode(ref objCustomer, false);
+}
+----------------------------------------------------------------
+
+-------------------------------
+FoQuickReceive.aspx.vb(2383):            txFiscalCodeCV.Text = hdFiscalCode.Value
+FoQuickReceive.aspx.vb(3179):                hdFiscalCode.Value = txFiscalCodeCV.Text
+-------------------------------
+
+
+==================End of Ciekawe miejsca 1==========================================
+
+-----------------customer----------
+private string idNumber = string.Empty;
+---------------------------------------------
+
+------------------CustomerBLL----------------------
+public bool ValidateFiscalCode(Customer objCustomer){
+throw new PowerTransactException(UsersResource._0str041CustView, true, "txRealFiscalCode");}
+
+(Utils.ValSqlStr(objCustomer.IDType).Substring(0, 3) == "PAS"
+----------------------------------------
+
+-----------------------------------------
+  <data name="_0str041CustView" xml:space="preserve">
+    <value>Please enter the Fiscal Code of the Customer or specify that the Customer doesn't have a Fiscal Code.</value></data>
+-----------------------------------------
+	
+-------------Partial Class fotranscustb Inherits PowerTransactPage----------------------	
+Protected Function CalcFiscalCode() As Boolean	
+            txFiscalCode.Text = CalcFC
+            Return True
+            UpdatePanel9.Update()
+--------------------------------------------------------------
+
+---------fotranscustb.aspx.vb--------------------------------------------
+Protected Sub btNext_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btNext.Click
+Boores = CalcFiscalCode()
+-----------------------------------------------------	
+
+=======================================================================
