@@ -1,11 +1,21 @@
 send/receive/billpay
 
-=======Scanned document not found=======Znalezione w klasach.metoda / plikach.resx========
-
-----------------------------------------
+==============Znalezione w klasach.metoda / plikach.resx========
+**
+-------------------Scanned document not found---------------------
 CustomerBLL : PowerTransactBLL
 private bool ValidateScanning(Customer objCustomer, string contactIDHidden, string wSExchange, ref string newScannedDoc)
+jest uzywane w
+private string ScanningValidationtoCreateCust(Customer objCustomer, string wSTempPath) //Exception
+oraz
+private string ScanningValidationToUpdateCust(Customer objCustomer, string wSTempPath)
 ----------------------------------------
+
+---------------ScanningValidationtoCreateCust uzywane w--------------------------
+public CreateCustStatus CreateCustomer(Customer objCustomer, out string newScannedDoc, out string contactNumber)
+-----------------------------------------
+
+
 
 =====================================================
 ==================Ciekawe miejsca 1======================
