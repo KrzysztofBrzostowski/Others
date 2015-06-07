@@ -1,7 +1,16 @@
 send/receive/billpay
 
+============================Ważne, porównać poniższe===============================
+Users\CustomerBLL.cs - (10764, 13) : ValidateCustomer(objCustomer, true, false);
+Users\CustomerBLL.cs - (9839, 17) : ValidateCustomer(objCustomer, true, false);
+===================================================================================
+
+==============Pytanie====================
+CustomerBLL (9831) : Fiscal code ma być w jakim polu klasy (Customer)
+==================================
+
 ==============Znalezione w klasach.metoda / plikach.resx========
-**
+
 -------------------Scanned document not found---------------------
 CustomerBLL : PowerTransactBLL
 private bool ValidateScanning(Customer objCustomer, string contactIDHidden, string wSExchange, ref string newScannedDoc)
@@ -15,10 +24,33 @@ private string ScanningValidationToUpdateCust(Customer objCustomer, string wSTem
 public CreateCustStatus CreateCustomer(Customer objCustomer, out string newScannedDoc, out string contactNumber)
 -----------------------------------------
 
-
-
 =====================================================
+
 ==================Ciekawe miejsca 1======================
+
+---------------------------ReceiveBLL---------------------------
+            //Validate if all the required customer details are captured or not //Ln 2015
+            objCustomerBLL.ValidateCustomer(objCustomer, false, true);
+
+            if ((PWTSession.FiscalCode == PWTConstant.PTCountry_Italy_Code) && (String.IsNullOrEmpty(objCustomer.FiscalCode) && (!(objCustomer.RFCAvailable))))
+            {
+                throw new PowerTransactException(TransactionResource._0str041CustView, true); /*Please enter the Fiscal Code of the Customer or specify that the Customer doesn't have a Fiscal Code.*/
+            }			
+----------------------------------------------------------------
+
+
+
+
+--------------------------CustomerBLL--------------------------
+Users\CustomerBLL.cs(10761):  bool calcFiscalres = CalculateAndValidateFiscalCode(ref objCustomer, false);
+
+public UpdateCustStatus UpdateCustomer(Customer objCustomer, out string newScannedDoc{
+            //calculate and validtae fiscal code
+            bool calcFiscalres = CalculateAndValidateFiscalCode(ref objCustomer, false);
+
+}
+----------------------------------------------------------------
+
 
 ---------------------------------------------------------------
   FoQuickReceive.aspx.vb(btNextCV 2240): 
@@ -33,13 +65,6 @@ public CreateCustStatus CreateCustomer(Customer objCustomer, out string newScann
                         cbVerified.Checked = False
                         cbVerified.Enabled = True
 -----------------------------------------------------------------
-
---------------------------CustomerBLL--------------------------
-public UpdateCustStatus UpdateCustomer(Customer objCustomer, out string newScannedDoc{
-            //calculate and validtae fiscal code
-            bool calcFiscalres = CalculateAndValidateFiscalCode(ref objCustomer, false);
-}
-----------------------------------------------------------------
 
 -------------------------------
 FoQuickReceive.aspx.vb(2383):            txFiscalCodeCV.Text = hdFiscalCode.Value
